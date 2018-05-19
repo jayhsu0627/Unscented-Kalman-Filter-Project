@@ -55,40 +55,28 @@ UKF::UKF() {
   Hint: one or more values initialized above might be wildly off...
   */
   ///* State dimension
-   n_x_ = 5;
-
-   ///* Augmented state dimension
-   n_aug_ = 7;
-   augmented_columns = 2*n_aug_ + 1;
-
-   Xsig_pred_ = MatrixXd::Zero(n_x_, augmented_columns);
-
-
-   ///* Sigma point spreading parameter
-   lambda_ = 3 - n_aug_;
-
-   ///* Weights of sigma points
-    weights_ = VectorXd(augmented_columns);
-    weights_.fill(1.0/(2.0*(lambda_+n_aug_)));
-    weights_[0] = lambda_/(lambda_+n_aug_);
-
-    P_ = MatrixXd::Identity(n_x_, n_x_);
-
-    Q_ = MatrixXd::Zero(2,2);
-    Q_(0,0) = std_a_*std_a_;
-    Q_(1,1) = std_yawdd_*std_yawdd_;
-
-
-    R_lidar = MatrixXd::Zero(2, 2);
-    R_lidar(0,0) = std_laspx_*std_laspx_;
-    R_lidar(1,1) = std_laspy_*std_laspy_;
-
-    R_radar = MatrixXd::Zero(3,3);
-
-    R_radar(0,0) = std_radr_*std_radr_;
-    R_radar(1,1) = std_radphi_*std_radphi_;
-    R_radar(2,2) = std_radrd_*std_radrd_;
-
+  n_x_ = 5;
+  ///* Augmented state dimension
+  n_aug_ = 7;
+  augmented_columns = 2*n_aug_ + 1;
+  Xsig_pred_ = MatrixXd::Zero(n_x_, augmented_columns);
+  ///* Sigma point spreading parameter
+  lambda_ = 3 - n_aug_;
+  ///* Weights of sigma points
+  weights_ = VectorXd(augmented_columns);
+  weights_.fill(1.0/(2.0*(lambda_+n_aug_)));
+  weights_[0] = lambda_/(lambda_+n_aug_);
+  P_ = MatrixXd::Identity(n_x_, n_x_);
+  Q_ = MatrixXd::Zero(2,2);
+  Q_(0,0) = std_a_*std_a_;
+  Q_(1,1) = std_yawdd_*std_yawdd_;
+  R_lidar = MatrixXd::Zero(2, 2);
+  R_lidar(0,0) = std_laspx_*std_laspx_;
+  R_lidar(1,1) = std_laspy_*std_laspy_;
+  R_radar = MatrixXd::Zero(3,3);
+  R_radar(0,0) = std_radr_*std_radr_;
+  R_radar(1,1) = std_radphi_*std_radphi_;
+  R_radar(2,2) = std_radrd_*std_radrd_;
 }
 
 UKF::~UKF() {}
