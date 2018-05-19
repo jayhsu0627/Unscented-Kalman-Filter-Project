@@ -75,7 +75,6 @@ UKF::UKF() {
   Q_(0,0) = std_a_*std_a_;
   Q_(1,1) = std_yawdd_*std_yawdd_;
 
-
   R_lidar = MatrixXd::Zero(2, 2);
   R_lidar(0,0) = std_laspx_*std_laspx_;
   R_lidar(1,1) = std_laspy_*std_laspy_;
