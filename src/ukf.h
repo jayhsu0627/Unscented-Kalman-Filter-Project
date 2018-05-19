@@ -63,11 +63,18 @@ public:
 
   ///* Augmented state dimension
   int n_aug_;
+  int augmented_columns;
 
   ///* Sigma point spreading parameter
   double lambda_;
 
+  MatrixXd Q_;
 
+  MatrixXd R_lidar;
+  MatrixXd R_radar;
+
+  float nis_lidar;
+  float nis_radar;
   /**
    * Constructor
    */
@@ -90,6 +97,20 @@ public:
    * @param delta_t Time between k and k+1 in s
    */
   void Prediction(double delta_t);
+
+  MatrixXd GenerateAugmentedSigmaPoints();
+
+  void PredictAugmentedSigmaPoints(MatrixXd augmentedSigmaPoints, float dt);
+  VectorXd PredictAugmentedSigmaPoint(VectorXd xsig_pred_col, float dt);
+
+  void PredictMeanAndCovariance();
+  VectorXd SubstractAndKeepAngleNormalizedIfNecessary(VectorXd a, VectorXd b, int indexOfAngle);
+
+  MatrixXd PredictLidar();
+  MatrixXd PredictRadar();
+
+  float UpdateState(VectorXd z, MatrixXd Zsig, MatrixXd R, int indexToNormalizeInZ);
+
 
   /**
    * Updates the state and the state covariance matrix using a laser measurement
